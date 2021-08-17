@@ -128,7 +128,7 @@ namespace WiFiSwitch.UI
         }
     }
 
-    public class AceessPointListItemView : View
+    public class AceessPointListItemView : VisualView
     {
         public AccessPoint Model
         {
@@ -142,6 +142,7 @@ namespace WiFiSwitch.UI
             set;
         }
 
+        private NPatchVisual mHighlightVisual;
         private TextLabel mNameLabel;
         private ImageView mConnectionStatus;
 
@@ -166,8 +167,7 @@ namespace WiFiSwitch.UI
                     mConnectionStatus.Hide();
                 }
             }
-
-            BackgroundColor = Selected ? new Color(0.94f, 0.94f, 0.94f, 1) : Color.Transparent;
+            mHighlightVisual.Opacity = Selected ? 1 : 0;
         }
 
         private void Initialize()
@@ -198,9 +198,14 @@ namespace WiFiSwitch.UI
                 HeightResizePolicy = ResizePolicyType.UseAssignedSize,
                 Margin = new Extents(0, 40, 0, 0)
             };
+            mHighlightVisual = new NPatchVisual()
+            {
+                URL = Application.Current.DirectoryInfo.SharedResource + "highlight.9.png",
+            };
 
             Add(mNameLabel);
             Add(mConnectionStatus);
+            AddVisual("Highlight", mHighlightVisual);
         }
     }
 }
